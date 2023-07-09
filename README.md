@@ -164,6 +164,7 @@ Click on the caution sign and select "Promote this server to a domain controller
 Select "Add a New Forest" and create a domain name. Select "Next" and create a password. Select "Next" until you are able to install.
 </p>
 
+<h3>&#9317; Create an Admin Account in Active Directory</h3>
 <p>
 <img src="https://github.com/delainee64/configure-ad/assets/114307952/71155e8a-2dbc-4e3c-8053-793b8972e41b" height="80%" width="80%" alt="Disk Sanitization Steps"/>
 <p>
@@ -171,49 +172,142 @@ Once installed, you will be logged out of DC-1 VM. Log back into DC-1 as the dom
 </p>
 
 <p>
-<img src="" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+<img src="https://github.com/delainee64/configure-ad/assets/114307952/f45288d8-4ef1-40d8-aa8d-13c0498fed41" height="80%" width="80%" alt="Disk Sanitization Steps"/>
 <p>
-
+Open "Server Manager" --> "Tools" --> "Active Directory Users and Computers".
 </p>
 
 <p>
-<img src="" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+<img src="https://github.com/delainee64/configure-ad/assets/114307952/ffa691bc-0496-475b-aeed-2c6c2322114c" height="80%" width="80%" alt="Disk Sanitization Steps"/>
 <p>
-
+Right-click "mydomain.com" --> "New" --> "Organizational Unit" and name it "_EMPLOYEES". Repeat this process to creat another organizational unit called "_ADMINS".
 </p>
 
 <p>
-<img src="" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+<img src="https://github.com/delainee64/configure-ad/assets/114307952/734cfb88-47ab-45bd-b721-d5f81a2ca3f8" height="80%" width="80%" alt="Disk Sanitization Steps"/>
 <p>
-
+Right-click inside "_ADMINS" folder and select "New" --> "User".
 </p>
 
 <p>
-<img src="" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+<img src="https://github.com/delainee64/configure-ad/assets/114307952/a44aa3d2-a568-44a7-8c0c-e7360fceefe8" height="80%" width="80%" alt="Disk Sanitization Steps"/>
 <p>
-
+Create a new admin account, select "Next" and set a password for the new account.
 </p>
 
 <p>
-<img src="" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+<img src="https://github.com/delainee64/configure-ad/assets/114307952/da9e0982-2df2-4269-b4f8-be936d5ab3ab" height="80%" width="80%" alt="Disk Sanitization Steps"/>
 <p>
-
+Right-click the new user and select "Properties".
 </p>
 
 <p>
-<img src="" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+<img src="https://github.com/delainee64/configure-ad/assets/114307952/8a925db8-be27-42f5-8092-ce72fdeb9b09" height="80%" width="80%" alt="Disk Sanitization Steps"/>
 <p>
-
+Select "Member of" --> "Add" and type "domain" --> "Check Name" and select "Domain Admins" --> "Okay" --> "Apply". Log out of DC-1.
 </p>
 
 <p>
-<img src="" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+<img src="https://github.com/delainee64/configure-ad/assets/114307952/7e8c751f-80f2-469f-9ba5-cfabedf8d0e4" height="80%" width="80%" alt="Disk Sanitization Steps"/>
 <p>
+Log back in with DC-1's public IP address. Log in using your DC admin credentials that we just created.
+</p>
 
+<h3>&#9318; Join Client-01 to the domain (mydomain.com)</h3>
+<p>
+<img src="https://github.com/delainee64/configure-ad/assets/114307952/e92fbaad-993f-4379-8d3e-d2233587a894" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+<p>
+Go to your Azure Portal, and select your DC-1 VM. Copy the prive IP address.
 </p>
 
 <p>
-<img src="" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+<img src="https://github.com/delainee64/configure-ad/assets/114307952/d72883a4-6824-4c9e-b15b-54498fb48dd3" height="80%" width="80%" alt="Disk Sanitization Steps"/>
 <p>
+Go to VM Client-1 --> "Networking" and select Client-s's "Network Interface".
+</p>
 
+<p>
+<img src="https://github.com/delainee64/configure-ad/assets/114307952/e39de1f4-bfa4-48bb-bffa-499388442e45" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+<p>
+Select "DNS Servers" -- > "Custom" and paste DC-1's private IP address and hit "Save". Go back to your VMs and select Client-1 again.
+</p>
+
+<p>
+<img src="https://github.com/delainee64/configure-ad/assets/114307952/6dd91e8a-147f-4d6c-a1e4-6c0016259ca2" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+<p>
+Click "Restart" and copy Client-1's public IP address.
+</p>
+
+<p>
+<img src="https://github.com/delainee64/configure-ad/assets/114307952/05175fe3-e221-4c9f-80ab-16b93018dd6c" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+<p>
+Open "Remote Desktop Connection" and enter Client-1's public IP address. Log in with Client-1's credentials.
+</p>
+
+<p>
+<img src="https://github.com/delainee64/configure-ad/assets/114307952/724e5f81-db2f-4a1e-9b1a-ccfc949b4dfb)" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+<p>
+Go to the system's settings and select "Rename this PC advanced".
+</p>
+
+<p>
+<img src="https://github.com/delainee64/configure-ad/assets/114307952/6ec36da2-32e6-4fd2-bace-ecd4620973ce" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+<p>
+Select "Change" --> "Domain" and type "mydomain.com" --> "Okay" and then enter DC-1's administrator's credentials. Client-1 will restart.
+</p>
+
+<h3>&#9319; Setup Remote Desktop for non-administrative users on Client-01</h3>
+<p>
+<img src="https://github.com/delainee64/configure-ad/assets/114307952/ab161249-8de5-4b90-8217-2642c2cae0e6" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+<p>
+Log back in to Client-1 through "Remote Desktop Connection". Use DC-1's administrator's credentials.
+</p>
+
+<p>
+<img src="https://github.com/delainee64/configure-ad/assets/114307952/9ab87f12-1e04-4b19-90c0-2e8e6fd390b4" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+<p>
+Go to system setting and select "Remote Desktop".
+</p>
+
+<p>
+<img src="https://github.com/delainee64/configure-ad/assets/114307952/56feb16a-efdc-4802-bf38-cd3f84bca032" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+<p>
+Select "Select users that can remotely access this PC" --> "Add" and type "domain users" --> "Check Name" --> "Okay".
+</p>
+
+<h3>&#9320; Create additional users and attempt to log into Client-01 with one of them</h3>
+<p>
+<img src="https://github.com/delainee64/configure-ad/assets/114307952/86a28a02-a68d-4d96-b262-74a71bf10def" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+<p>
+Go back to VM DC-1. Go to Start and type "Powershell". Right-click on "Windows Powershell ISE" and "Run as an Adminstrator".
+</p>
+
+<p>
+<img src="https://github.com/delainee64/configure-ad/assets/114307952/7ee8b99a-bf79-405c-97ef-faffdfa75768" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+<p>
+Click on "New Script" and paste a premade script that creates new user names and deposits them into our _EMPLOYEES file. Click "Run Script".
+</p>
+
+<p>
+<img src="https://github.com/delainee64/configure-ad/assets/114307952/fb6b0d6d-479b-4dba-be2c-ead0bed43efa" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+<p>
+Minimize the window and go back to "Server Manager" --> "Tools" --> "Active Directory Users and Computers".
+</p>
+
+<p>
+<img src="https://github.com/delainee64/configure-ad/assets/114307952/d5763a0b-1614-4987-96d8-59d10e1a2837" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+<p>
+Select "mydomain" --> "_EMPLOYEES" and select any name you wish and copy the name.
+</p>
+
+<p>
+<img src="https://github.com/delainee64/configure-ad/assets/114307952/5ef2b956-fb52-41d6-8894-b466d997ffc0" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+<p>
+Log out of VM Client-1 and log back in using Client-1's public IP address. Use the name of the employee you copied from DC-1 to log in to VM Client-1.
+</p>
+
+<p>
+<img src="https://github.com/delainee64/configure-ad/assets/114307952/4bb0518d-7d75-4c59-a4c5-112073e5a88e" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+<p>
+Here we have our new user we created. We can do the same with any of the users we created in DC-1. This lab is complete. :)
 </p>
